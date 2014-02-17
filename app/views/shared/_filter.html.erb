@@ -1,0 +1,87 @@
+<div class="arcticmodal-close"><span class="icon-remove"></span></div>
+<div class="modal-content">
+	<form action="/<%= params[:locate] %>" method="get" id='search' >
+		<%= hidden_field_tag 'customers' %>
+		<%= hidden_field_tag 'managers' %>
+		<%= hidden_field_tag 'departments' %>
+		<div class="customers-box">
+			<h2>Заказчик</h2>
+			<ul>
+				<% 	arr =  Array.new
+					unless params[:customers].blank?
+						arr = params[:customers].split
+						arr.reverse!
+					end
+					@customers.each do |customer|
+						bool = false
+						if arr.last == customer.id_zakazchik.to_s
+							bool =  true
+							arr.pop
+						end
+				%>
+					<li>
+						<%= check_box_tag "customer#{customer.id_zakazchik}", customer.id_zakazchik, bool, :class => 'none' %>
+						<% if bool %>
+							<%= label_tag "customer#{customer.id_zakazchik}", "<span class='icon-check'></span><span>#{customer.name_small}</span>".html_safe, class: "check" %>
+						<% else %>
+							<%= label_tag "customer#{customer.id_zakazchik}", "<span class='icon-check-empty'></span><span>#{customer.name_small}</span>".html_safe, class: "check" %>
+						<% end %>
+				<% end %>
+			</ul>
+		</div>
+		<div class="managers-box">
+			<h2>Руководитель</h2>
+			<ul>
+				<% 	arr =  Array.new
+					unless params[:managers].blank?
+						arr = params[:managers].split
+						arr.reverse!
+					end
+					@managers.each do |manager|
+						bool = false
+						if arr.last == manager.id_manager.to_s
+							bool =  true
+							arr.pop
+						end
+				%>
+					<li>
+						<%= check_box_tag "manager#{manager.id_manager}", manager.id_manager, bool, :class => 'none' %>
+						<% if bool %>
+							<%= label_tag "manager#{manager.id_manager}", "<span class='icon-check'></span><span>#{manager.fio}</span>".html_safe, class: "check" %>
+						<% else %>
+							<%= label_tag "manager#{manager.id_manager}", "<span class='icon-check-empty'></span><span>#{manager.fio}</span>".html_safe, class: "check" %>
+						<% end %>
+				<% end %>
+			</ul>
+		</div>
+		<div class="departments-box">
+			<h2>Головной отдел</h2>
+			<ul>
+				<% 	arr =  Array.new
+					unless params[:departments].blank?
+						arr = params[:departments].split
+						arr.reverse!
+					end
+					@departments.each do |department|
+						bool = false
+						if arr.last == department.id_otdel.to_s
+							bool =  true
+							arr.pop
+						end
+				%>
+					<li>
+						<%= check_box_tag "department#{department.id_otdel}", department.id_otdel, bool, :class => 'none' %>
+						<% if bool %>
+							<%= label_tag "department#{department.id_otdel}", "<span class='icon-check'></span><span>#{department.name_small}</span>".html_safe, class: "check" %>
+						<% else %>
+							<%= label_tag "department#{department.id_otdel}", "<span class='icon-check-empty'></span><span>#{department.name_small}</span>".html_safe, class: "check" %>
+						<% end %>
+				<% end %>
+			</ul>
+		</div>
+		<div>
+			<%= submit_tag 'Применить', :class => 'submit', :name => nil %>
+			<%= button_tag 'Очистить', :type => 'button', :class => 'clear_check' %>
+		</div>
+	</form>
+</div>

@@ -1,0 +1,14 @@
+<%= form_tag(login_path, :remote => true) do %>
+	<div id="alert"></div>
+	<div>
+		<%= label_tag :login, 'Логин' %><br />
+		<%= text_field_tag :login, params[:login] %>
+	</div>
+	<div>
+		<%= label_tag :password, 'Пароль' %><br />
+		<%= password_field_tag :password, params[:password] %>
+	</div>
+	<div>
+		<%= submit_tag "Войти" %>
+	</div>
+<% end %>

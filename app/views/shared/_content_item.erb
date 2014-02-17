@@ -1,0 +1,74 @@
+<div class="content-item" data-item-id="<%= contract.id %>" >
+	<div class="info">
+		<h2>
+			<%= link_to_unless(i, contract.name_small, path+contract.id.to_s) do
+				contract.tree_name(@c) 
+			end %>
+		</h2>
+		<% unless contract.name_small == contract.name_full %>
+			<h3><%= contract.name_full %></h3>
+		<% end %>
+		<% if contract.id_sub_work == 0 || i || !contract.date_start.nil? %>
+			<ul class="info-ul">
+				<% if contract.id_sub_work == 0 || i %>
+					<li><span class="icon-tie tipped" data-tooltip="Заказчик"></span><li><% if contract.zakazchik %><%= contract.zakazchik.name_small %><% end %>
+					<li><span class="icon-user tipped" data-tooltip="Руководитель"></span><li><% if contract.manager %><%= contract.manager.fio %><% end %>
+					<li><span class="icon-users tipped" data-tooltip="Головной отдел"></span><li><% if contract.otdel_dfct %><%= contract.otdel_dfct.name_full %><% end %>
+				<% end %>
+				<% unless contract.date_start.nil? %>
+					<li><span class="icon-calendar tipped" data-tooltip="Сроки"></span><li>с <%= contract.start %> по <%= contract.stop %>
+				<% end %>
+			</ul>
+		<% end %>
+		<% if !contract.comment.blank? %>
+			<p><%= contract.comment %></p>
+		<% end %>
+		<div class="tree-content none"></div>
+		<% if i %>
+			<div class="btn-wrap"><a href="/<%= model %>/contracts_tree/<%= contract.id.to_s %>" data-remote="true" >
+				<span class="btn"><span class="icon-archive"></span><span class="text">Структура</span></span>
+			</a></div>
+		<% end %>
+	</div>
+	<div class="files none">
+		<% if contract.documents.size > 0 %>
+			<h2>
+				<%= link_to_unless(i, contract.name_small, path+contract.id.to_s) do
+					contract.tree_name(@c) 
+				end %>
+			</h2>
+			<ul>
+				<% contract.documents.each do |document| %>
+					<li>
+						<% if access < document.security %>
+							<span class='icon-sign-blank'></span>
+						<% else %>
+							<%= label_tag "doc#{document.id}", "<span class='icon-check-empty'></span>".html_safe, class: "check" %>
+							<%= check_box_tag "doc#{document.id}", document.id, false, :class => "none #{document.can_see}" %>
+						<% end %>
+					<li><span class="icon-file <%= document.can_see %>"></span>
+					<li><%= document.path_file_ed %>
+				<% end %>
+			</ul>
+			<div class="btn-wrap">
+				<span data-tooltip="Скачать" data-type="<% if model=="archives" %>archiveskdpd<% else %>work<% end %>_<%= contract.id %>" class="btn download tipped"><span class="icon-download"></span></span>
+				<span class="btn show tipped" data-type="<% if model=="archives" %>archiveskdpd<% else %>work<% end %>_<%= contract.id %>" data-tooltip="Показать"><span class="icon-eye"></span></span>
+			</div>
+		<% end %>
+	</div>
+</div>
+<ul class="labels">
+	<% if contract.documents.size > 0 %>
+		<li>
+			<span class="attachment tipped" data-tooltip="Прикреплённые файлы" data-tool-attach="Прикреплённые файлы" data-tool-list="Информация о договоре" data-item-link="<%= contract.id %>"><span class="icon-attachment"></span></span>
+	<% end %>
+	<% unless i %>
+		<li>
+			<%= text_field_tag "link#{contract.id}", path+contract.id.to_s, class: "none" %>
+			<span class="link tipped" data-tooltip="Получить ссылку"><span class="icon-link"></span></span>
+		<% if j %>
+			<li>
+				<span class="struct tipped" data-tooltip="Показать вложения" data-tool-plus="Показать вложения" data-tool-minus="Скрыть вложения" data-item-link="<%= contract.id %>"><span class="icon-plus"></span></span>
+		<% end %>
+	<% end %>
+</ul>

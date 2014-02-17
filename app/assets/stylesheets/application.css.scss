@@ -1,0 +1,392 @@
+/*
+ * This is a manifest file that'll be compiled into application.css, which will include all the files
+ * listed below.
+ *
+ * Any CSS and SCSS file within this directory, lib/assets/stylesheets, vendor/assets/stylesheets,
+ * or vendor/assets/stylesheets of plugins, if any, can be referenced here using a relative path.
+ *
+ * You're free to add application-wide styles to this file and they'll appear at the top of the
+ * compiled file, but it's generally better to create a new file per style scope.
+ *
+ *= require_self.
+ *= require style
+ *= require jquery.arcticmodal
+ *= require trip.min
+ */
+@import "variables.css.scss";
+@import "header.css.scss";
+@import "panel.css.scss";
+@import "content_items.css.scss";
+ 
+a{
+	text-decoration: none;
+}
+ 
+body{
+	font-family: 'Roboto Condensed', sans-serif;
+	background: $body-bgcolor;
+	color: $main-ftcolor;
+	font: $main-ft;
+}
+
+h1{
+	font: $header-ft;
+	letter-spacing: 1px;
+	font-size: 20px;
+	margin-left: 5%;
+}
+ 
+h2{
+	font: $h2-ft;
+}
+
+h3{
+	font: $h3-ft;
+}
+
+input{
+	-webkit-appearance: none;
+	border: none;
+	outline: none;
+	
+	font: $input-ft;
+	color: $main-ftcolor;
+}
+
+img{
+	position: absolute;
+}
+ 
+li{
+	list-style-type: none;
+}
+ 
+nav,
+nav a,
+nav ul,
+nav li,
+nav div,
+nav input,
+.panel ul {
+    margin: 0;
+    padding: 0;
+    border: none;
+    outline: none;
+}
+ 
+.podl{
+	width: 100%;
+	height: 100%;
+	position: absolute;
+	border-top: 1px solid silver;
+	//border-left: 1px solid;
+	top: 28px;
+	left: -20px;
+	z-index: -1;
+}
+
+.left{
+	width: 100%;
+	height: 100%;
+	position: absolute;
+	border-left: 1px solid silver;
+	top: -55px;
+	left: -20px;
+	z-index: -1;
+}
+
+.content{
+	position: relative;
+	top: 90px;
+	
+	width: $content-wd;
+	margin: auto;
+	padding: 0 75px 50px;
+	
+	.item-ul{
+		margin-left: 40px;
+		position: relative;
+		
+		li:last-child > .podl{
+			background: $body-bgcolor;
+		}
+	}
+	
+	.item-li{
+		margin-top: 20px;
+		position: relative;
+	}
+	
+}
+
+.tree-content{
+	.item-ul > li > span{
+		margin-left: 0;
+	}
+	
+	span { /* обертка пункта */
+		text-decoration: none;
+		display: block; /* растянем до правого края блока */
+		margin: 0 0 0 1.7em;      
+		background-color: transparent;
+		border: solid silver; /* цвет линий */  
+		border-width: 0 0 1px 1px; /* границы: низ и лево */
+	}
+   
+   span a, span .span {/* тест элемента дерева */
+		border: none;
+		display: block; 
+		position: relative;
+		top: .7em; /* смещаем узел на середину линии */
+		background-color: #fff; /* закраска в цвет фона обязательна иначе будет видно линию */
+		margin: 0 0 .2em .7em; /* делаем промежуток между узлами, отодвигаем левее  */
+		padding: 0 0.3em; /* небольшой отступ от линии */
+    }
+	
+	.span{
+		color: $help-color;
+	}
+	
+	ul li {
+		line-height: 1.6em;
+    }
+	ul ul li {
+        margin: 0 0 0 1.7em;
+        border-left: 1px solid silver; /* цвет вертикальной линии между узлами */
+    }
+	
+	.item-ul > li > ul > li{
+		margin-left: 0;
+	}
+		
+	li.last {/* последний узел, соединительную линию к след. узлу убираем */
+		border: none; 
+	}
+	
+	ul li:last-child > ul > li,
+	.item-ul > li > span{
+		border: none; 
+	}
+}
+
+.lower{
+	top: 120px;
+}
+
+.none{
+	display: none;
+}
+
+// закрыть модальные окна
+.arcticmodal-close{
+	width: 40px;
+	height: 50px;
+	background: $help-color;
+	border-radius: 0 3px 3px 0;
+	color: $panel-ftcolor;
+	cursor: pointer;
+	
+	float: right;
+	margin-top: 20px;
+	margin-right: -40px;
+	
+	box-sizing: border-box;
+	-moz-box-sizing: border-box;
+	padding: 11px 9px;
+	font-size: 26px;
+	
+	box-shadow: $content-shd;
+}
+
+// логин и модальные окна
+.login, .modal-content{
+	box-sizing: border-box;
+	-moz-box-sizing: border-box;
+	position: relative; // чтобы блок оказался выше ярлыка
+	
+	background: $content-bgcolor;
+	border-radius: 3px;
+	margin-left: -8px;
+	
+	box-shadow: $content-shd;
+	
+	div{
+		overflow: hidden;
+	}
+	
+	input[type="submit"], button{
+		-webkit-appearance: none;
+		background: $monochr-color;
+		border: 0;
+		border-radius: 3px;
+		color: $main-ftcolor;
+		font: $input-ft;
+		margin-left: 15px;
+		padding: 6px 10px;
+		
+		float: right;
+	}
+	
+	input[type="submit"]:hover, button:hover{
+		background: $monochr-h-color;
+	}
+}
+
+// Логин
+.login{
+	width: 350px;
+	padding: 10px 30px;
+	
+	label{
+		display: inline-block;
+		padding: 0 4px 4px;
+	}
+	
+	#login, #password{
+		box-sizing: border-box;
+		-moz-box-sizing: border-box;
+		background: $body-bgcolor;
+		border: 1px solid $monochr-h-color;
+		border-radius: 3px;
+		padding: 6px 8px;
+		width: 290px;
+	}
+	
+	div{
+		margin: 20px 0;
+	}
+	
+	div:last-child{
+		margin: 10px 0;
+	}
+}
+
+// модальные окна
+.modal-content{
+	width: $content-wd;
+	padding: 20px;
+	
+	ul{
+		-webkit-column-count: 2;
+		   -moz-column-count: 2;
+			    column-count: 2;
+		
+		margin-bottom: 15px;
+		
+		input[type="checkbox"]{
+			margin-left: -300%;
+		}
+	}
+	
+	label{
+		span{
+			display: inline-block;
+		}
+		
+		span:first-child{
+			width: 6%;
+			padding-top: 3px;
+			vertical-align: top;
+			font-size: 20px;
+		}
+		
+		span:last-child{
+			width: 94%;
+		}
+	}
+}
+
+.not-found{
+	font-size: 17px;
+}
+
+// Тултипы
+.tooltip{
+	display: none;
+	position: absolute;
+	background: rgba(25, 25, 25, 0.85);
+	border-radius: 3px;
+	color: $panel-ftcolor;
+	display: none;
+	padding: 6px 8px;
+	z-index: 1001;
+}
+
+// Параметры
+.params{
+	position: fixed;
+	left: 50px;
+	top: 70px;
+	height: 30px;
+	width: 100%;
+	z-index: 99;
+	
+	background: $help-color;
+	color: $header-ftcolor;
+	opacity: 0.9;
+	
+	a{
+		color: $header-ftcolor;
+	}
+	
+	.icon-ok{
+		padding-left: 10px;
+	}
+	
+	.mar{
+		margin-right: 25px;
+	}
+	
+	.wrapper{
+		margin: 0 auto;
+		width: 960px;
+		
+		div{
+			margin-left: -50px;
+			height: 100%;
+		}
+	}
+	
+	.icon-remove{
+		padding-right: 4px;
+	}
+	
+	ul{
+		height: 100%;
+		display: inline-block;
+	}
+	
+	li{
+		display: inline-block;
+		height: 100%;
+		line-height: 29px;
+		margin-right: 25px;
+		padding: 0 5px;
+		cursor: pointer;
+	}
+	
+	li:hover{
+		background: rgba(255, 255, 255, 0.3);
+	}
+	
+	span{
+		display: inline-block;
+		height: 100%;
+		line-height: 29px;
+	}
+}
+
+.none-pan{
+	left: 0;
+}
+
+.trip-block{
+	a{
+		color: $trip-link-ftcolor;
+	}
+}
+
+.archive-struct{
+	width: 136px;
+}
+ 

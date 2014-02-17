@@ -1,0 +1,55 @@
+<% 	
+	if @model == "archives"
+		path = archives_url + "/"
+	else
+		path = contracts_url + "/"
+	end
+	bool = false 
+	i = false
+%>
+<% if !params[:customers].blank? || !params[:managers].blank? || !params[:departments].blank? %>
+	<% bool = true %>
+	<div class="params">
+		<div class="wrapper"><div>
+			<ul>
+				<li data-option='all'><span class="icon-remove"></span>Применён фильтр по категориям:
+				<% if !params[:customers].blank? %><li data-option='customers'><span class="icon-remove"></span>Заказчик<% end %>
+				<% if !params[:managers].blank? %><li data-option='managers'><span class="icon-remove"></span>Руководитель<% end %>
+				<% if !params[:departments].blank? %><li data-option='departments'><span class="icon-remove"></span>Головной отдел<% end %>
+				
+			</ul>
+		</div></div>
+	</div>
+<% end %>
+<div class="content <% if bool %> lower <% end %>">
+	<ul class="root">
+		<% 	
+			arr = [0]
+			sub_id = -1
+ 	
+			@contracts.each do |contract| 
+				if contract.id_sub_work == sub_id
+					arr << sub_id
+					none = ""
+					if arr.length == 2 then none = "none" end
+					%><ul class="item-ul <%= none %>"><div class="left"></div><%
+				else
+					until contract.id_sub_work == arr.last do
+						arr.pop
+						%></ul><%
+					end
+				end
+				%><li class="item-li">
+				<% if arr.length != 1 
+					j = false %>
+					<div class="podl"></div>
+				<% else
+					j = true
+				end %>
+				<%= render partial: 'shared/content_item', :locals => { :contract => contract, :access => @access, :i => i, :path => path, :j => j, :model => @model} %>
+				<%
+				sub_id = contract.id_work
+			end
+		%>
+	</ul>
+</div>

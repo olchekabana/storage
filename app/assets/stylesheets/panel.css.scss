@@ -1,0 +1,147 @@
+@import "variables.css.scss";
+
+.panel{
+	position: fixed;
+	width: 50px;
+	height: 100%;
+	z-index: 100;
+	left: 0;
+	top: 70px;
+	
+	background: $panel-bgcolor;
+	transition: background 0.5s ease;
+	
+	a{
+		color: $panel-ftcolor;
+		
+		display: inline-block;
+		width: 100%;
+		height: 100%;
+	}
+	
+	li{
+		box-sizing: border-box;
+		-moz-box-sizing: border-box;
+		cursor: pointer;
+	}
+	
+	li ul{
+		position: absolute;
+		top: -5px;
+		left: 50px; // ширина панели
+	}
+	
+	ul li{
+		position: relative;
+	}
+	
+	//span{
+	.filter,
+	.view,
+	.sorting,
+	.help{
+		display: block;
+		
+		width: 40px;
+		height: 40px;
+		margin: 10px 5px;
+		border-radius: 3px;
+		
+		color: $panel-ftcolor;
+		font-size: 25px;
+		line-height: 40px;
+		text-align: center;
+	}
+	
+	.icon{
+		margin-left: -1px;
+	}
+	
+	.icon-caret-right{
+		display: inline-block;
+		vertical-align: bottom;
+		margin-left: 10px;
+		padding-bottom: 3px;
+		font-size: 24px;
+	}
+	
+	.icon-ok{
+		display: inline-block;
+		//float: right;
+		font-size: 20px;
+		padding-top: 4px;
+		padding-left: 10px;
+	}
+
+	// меню
+	.left-menu{
+		position: relative;
+		top: 40px;
+		left: 0;
+	}
+	
+	// итемы и класс для ховера
+	.item, .item2{
+		
+		display: none;
+		
+		float: left;
+		color: $panel-ftcolor;
+		font: $panel-ft;
+		letter-spacing: 1px;
+		white-space: nowrap;
+	}
+	
+	.item{
+		//opacity: 0.0;
+		height: 50px;
+		//margin-left: 40px;
+		padding: 10px 15px;
+		
+		background: $header-bgcolor;
+		
+		//transition: opacity 0.7s ease;
+	}
+	
+	.item2{
+		
+		ul{
+			top: 0;
+			left: 0;
+		}
+		
+		li{
+			background: $panel-bgcolor;
+			height: 50px;
+			padding: 10px 15px;
+		}
+		
+		li:hover{
+			background: $header-bgcolor;
+		}
+	}
+
+	//	цветные пункты меню
+	
+	.filter{
+		background: $filter-color;
+	}
+	.view{
+		background: $view-color;
+	}
+	.sorting{
+		background: $main-color;
+	}
+	.help{
+		background: $help-color;
+	}
+
+}
+
+.panel:hover{
+	background: $header-bgcolor;
+}
+
+.active{
+	background: $header-bgcolor;
+}

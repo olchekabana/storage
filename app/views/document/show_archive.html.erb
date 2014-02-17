@@ -1,0 +1,35 @@
+<div class="content">
+	<% 	path = archive_url(@contract) %>
+
+	<div class="content-item" data-item-id="<%= @contract.id %>" >
+		<div class="files">
+			<h2><%= @contract.tree_name(@c) %></h2>
+			<% if @contract.documents.size > 0 %>
+				<ul>
+					<% @contract.documents.each do |document| %>
+						<li>
+							<% if @access < document.security %>
+								<span class="icon-sign-blank"></span>
+							<% else %>
+								<%= label_tag "doc#{document.id}", "<span class='icon-check-empty'></span>".html_safe, class: "check" %>
+								<%= check_box_tag "doc#{document.id}", document.id, false, :class => "none #{document.can_see}" %>
+							<% end %>
+						<li><span class="icon-file <%= document.can_see %>"></span>
+						<li><%= document.path_file_ed %>
+					<% end %>
+				</ul>
+				<div class="btn-wrap">
+					<span data-tooltip="Скачать" data-type="standart_<%= @contract.id %>" class="btn download tipped"><span class="icon-download"></span></span>
+					<span class="btn show tipped" data-type="standart_<%= @contract.id %>" data-tooltip="Показать"><span class="icon-eye"></span></span>
+				</div>
+			<% end %>
+		</div>
+		<div class="info">
+			<div class="tree-content none"></div>
+			<div class="btn-wrap"><a href="/archives/archives_tree/<%= @contract.id.to_s %>" data-remote="true" >
+				<span class="btn archive-struct"><span class="icon-archive"></span><span class="text">Структура</span></span>
+			</a></div>
+		</div>
+	</div>
+	
+</div>

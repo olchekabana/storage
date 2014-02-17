@@ -1,0 +1,42 @@
+<% 	i = false %>
+
+<div class="content">
+	<ul class="root">
+		<% 	
+			arr = [params[:id].to_i]
+			sub_id = -1
+ 	
+			@standards.each_with_index do |standard, k| 
+				next_value = @standards[k+1].nil? ? -1 : @standards[k+1].sub_id
+				if standard.sub_id == sub_id
+					arr << sub_id
+					none = "none"
+					if standard.sub_id == 106 then none = "" end
+					%><ul class="item-ul <%= none %>"><div class="left"></div><%
+				else
+					until standard.sub_id == arr.last do
+						arr.pop
+						%></ul><%
+					end
+				end
+				%><li class="item-li">
+				<% unless arr.length == 1 
+					unless standard.sub_id == 106
+						j = false
+					else
+						j = true
+					end %>
+					<div class="podl"></div>
+				<% end
+					if next_value == standard.id
+						j = true
+					else
+						j = false
+					end %>
+				<%= render partial: 'shared/standard_item', :locals => { :standard => standard, :access => @access, :i => i, :j => j, :c =>@c } %>
+				<%
+				sub_id = standard.id
+			end
+		%>
+	</ul>
+</div>

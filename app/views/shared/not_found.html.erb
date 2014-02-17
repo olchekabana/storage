@@ -1,0 +1,24 @@
+<% if current_page?(archives_path) || current_page?(contracts_path) %>
+	<div class="params">
+		<div class="wrapper"><div>
+			<ul>
+				<li data-option='all'><span class="icon-remove"></span>Применён фильтр по категориям:
+				<% if !params[:customers].blank? %><li data-option='customers'><span class="icon-remove"></span>Заказчик<% end %>
+				<% if !params[:managers].blank? %><li data-option='managers'><span class="icon-remove"></span>Руководитель<% end %>
+				<% if !params[:departments].blank? %><li data-option='departments'><span class="icon-remove"></span>Головной отдел<% end %>
+				
+			</ul>
+		</div></div>
+	</div>
+<% end %>
+<% if current_page?(search_path) %>
+	<div class="params none-pan">
+		<div class="wrapper">
+			<span>Результаты поиска по запросу: "<%= params[:search] %>"</span>
+		</div>
+	</div>
+<% end %>
+
+<div class="content lower">
+	<div class="not-found">Ничего не найдено</div>
+</div>

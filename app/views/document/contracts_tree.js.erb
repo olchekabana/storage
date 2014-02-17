@@ -1,0 +1,9 @@
+var tree, item, tree_content, tree_btn;
+
+tree_content = $('<%= j(render(:partial => "contracts_tree", :locals => { :id => params[:id], :model => @model }))%>');
+item = $("[data-item-id='" + <%= params[:id] %> + "']");
+tree = item.find(".tree-content");
+tree.append(tree_content);
+tree.slideDown(350);
+tree_btn = "<span class='btn hide-tree'><span class='icon-archive'></span><span class='text' data-hide='Скрыть' data-show='Структура'>Скрыть</span></span>";
+item.find(".info .btn-wrap").html(tree_btn);

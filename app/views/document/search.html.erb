@@ -1,0 +1,29 @@
+<div class="params none-pan">
+	<div class="wrapper">
+		<span>Результаты поиска по запросу: "<%= params[:search] %>"</span>
+	</div>
+</div>
+<div class="content lower">
+	<% if @contracts.size >0 %>
+		<h1>ДОГОВОРА</h1>
+		<% path = contracts_path + "/"
+		url = contracts_url + "/"
+		@contracts.each do |contract| %>
+			<%= render partial: 'shared/mini_content_item', :locals => { :contract => contract, :access => @access, :path => path, :url => url, :c => @c, :model => "work" } %>
+	<% 	end
+	end %>
+	<% if @archives.size >0 %>
+		<h1>РКД</h1>
+		<% path = archives_path + "/"
+		url = archives_url + "/"
+		@archives.each do |archive| %>
+			<%= render partial: 'shared/archive_item', :locals => { :contract => archive, :access => @access, :i => true, :j => false, :path => path, :c => @a } %>
+	<% 	end
+	end %>
+	<% if @standards.size >0 %>
+		<h1>ГОСТы</h1>
+		<% @standards.each do |standard| %>
+			<%= render partial: 'shared/standard_item', :locals => { :standard => standard, :access => @access, :i => true, :j => false, :c => @s } %>
+		<% end %>
+	<% end %>
+</div>

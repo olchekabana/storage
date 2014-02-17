@@ -1,0 +1,49 @@
+<div class="content-item" data-item-id="<%= contract.id %>">
+	<div class="info">
+		<h2>
+			<%= link_to contract.tree_name(c), path+contract.id.to_s %>
+		</h2>
+		<% unless contract.name_small == contract.name_full %>
+			<h3><%= contract.name_full %></h3>
+		<% end %>
+		<% unless current_page?(search_path) %>
+			<div class="tree-content none"></div>
+			<div class="btn-wrap"><a href="<%= path %>contracts_tree/<%= contract.id.to_s %>" data-remote="true" >
+				<span class="btn"><span class="icon-archive"></span><span class="text">Структура</span></span>
+			</a></div>
+		<% end %>
+	</div>
+	<div class="files none">
+		<% if contract.documents.size > 0 %>
+			<h2>
+				<%= link_to contract.tree_name(c), path+contract.id.to_s %>
+			</h2>
+			<ul>
+				<% contract.documents.each do |document| %>
+					<li>
+						<% if access < document.security %>
+							<span class='icon-sign-blank'></span>
+						<% else %>
+							<%= label_tag "doc#{document.id}", "<span class='icon-check-empty'></span>".html_safe, class: "check" %>
+							<%= check_box_tag "doc#{document.id}", document.id, false, :class => 'none' %>
+						<% end %>
+					<li><span class="icon-file <%= document.can_see %>"></span>
+					<li><%= document.path_file %>
+				<% end %>
+			</ul>
+			<div class="btn-wrap">
+				<span data-tooltip="Скачать" data-type="<%= model %>_<%= contract.id %>" class="btn tipped"><span class="icon-download"></span></span>
+				<span class="btn show tipped" data-type="<%= model %>_<%= contract.id %>" data-tooltip="Показать"><span class="icon-eye"></span></span>
+			</div>
+		<% end %>
+	</div>
+</div>
+<ul class="labels">
+	<% if contract.documents.size > 0 %>
+		<li>
+			<span class="attachment tipped" data-tooltip="Прикреплённые файлы" data-tool-attach="Прикреплённые файлы" data-tool-list="Информация о договоре" data-item-link="<%= contract.id %>"><span class="icon-attachment"></span></span>
+	<% end %>
+	<li>
+		<%= text_field_tag "link#{contract.id}", url+contract.id.to_s, class: "none" %>
+		<span class="link tipped" data-tooltip="Получить ссылку"><span class="icon-link"></span></span>
+</ul>

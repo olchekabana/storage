@@ -1,0 +1,38 @@
+<% 	
+	i = false 
+	path = archives_url + "/"
+%>
+
+<div class="content">
+	<ul class="root">
+		<% 	
+			arr = [params[:id].to_i]
+			sub_id = -1
+		
+			@contracts.each_with_index do |contract, k| 
+				next_value = @contracts[k+1].nil? ? -1 : @contracts[k+1].sub_id
+				if contract.sub_id == sub_id
+					arr << sub_id
+					%><ul class="item-ul none"><div class="left"></div><%
+				else
+					until contract.sub_id == arr.last do
+						arr.pop
+						%></ul><%
+					end
+				end
+				%><li class="item-li">
+				<% unless arr.length == 1 %>
+					<div class="podl"></div>
+				<% 	end
+					if next_value == contract.id
+						j = true
+					else
+						j = false
+					end %>
+				<%= render partial: 'shared/archive_item', :locals => { :contract => contract, :access => @access, :i => i, :j => j, :path => path } %>
+				<%
+				sub_id = contract.id
+			end
+		%>
+	</ul>
+</div>

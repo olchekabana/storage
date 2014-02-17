@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Storage</title>
+  <link href='http://fonts.googleapis.com/css?family=Roboto+Condensed&subset=cyrillic' rel='stylesheet' type='text/css'>
+  <%= stylesheet_link_tag    "application", :media => "all" %>
+  <%= javascript_include_tag "application" %>
+  <%= javascript_include_tag controller_name %>
+  <%= csrf_meta_tags %>
+</head>
+<body>
+<%= render partial: 'shared/header' %>
+
+<% unless current_page?(search_path) %>
+	<%= render partial: 'shared/panel' %>
+<% end %>
+
+<%= yield %>
+
+</body>
+</html>

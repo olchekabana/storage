@@ -1,0 +1,24 @@
+<ul class="item-ul">
+<% 	
+	arr = [0]
+	sub_id = -1
+ 	
+	@tree.each do |contract|
+		if contract.id_sub_work == sub_id
+			arr << sub_id
+			%><ul><%
+		else
+			until contract.id_sub_work == arr.last do
+				arr.pop
+				%></ul><%
+			end
+		end
+		%><li><span>
+			<%= link_to_unless(contract.id_work == id.to_i, contract.name_small, "/#{model}/#{contract.id_work}") do
+				content_tag(:span, contract.name_small, class: "span")
+			end %>
+		</span><%
+		sub_id = contract.id_work
+	end
+%>
+</ul>
