@@ -3,7 +3,11 @@ class WorkSubWork < ActiveRecord::Base
   belongs_to :zakazchik, :foreign_key => 'id_zakazchik'
   belongs_to :manager, :foreign_key => 'id_manager'
   belongs_to :otdel_dfct, :foreign_key => 'id_otdel'
+  
   has_many :documents, :foreign_key => 'id_work'
+  has_many :stages_dog, :foreign_key => 'id_work'
+  has_many :works_dog, :foreign_key => 'id_work'
+  
   has_and_belongs_to_many :work_sub_works, :join_table=> 'work_sub_works', :foreign_key => 'id_sub_work', :association_foreign_key => 'id_work'
   
   scope :extended, includes(:documents)

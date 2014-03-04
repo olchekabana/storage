@@ -1,5 +1,7 @@
 class User < ActiveRecord::Base
   # attr_accessible :title, :body
+  has_many :works_dog, :foreign_key => "id_isp"
+  has_many :works_dog, :foreign_key => "id_manag"
   
   def self.give_me_access(id)
 	User.find(id).pr_admin

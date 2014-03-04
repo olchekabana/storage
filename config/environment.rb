@@ -5,5 +5,5 @@ require File.expand_path('../application', __FILE__)
 Storage::Application.initialize!
 
 ActiveSupport::Inflector.inflections do |inflect|
-	inflect.uncountable "zakazchik", "archiveskdpd", "otdel_dfct"
+	inflect.uncountable "zakazchik", "archiveskdpd", "otdel_dfct", "stages_dog", "works_dog"
 end
