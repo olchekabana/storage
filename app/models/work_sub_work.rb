@@ -14,6 +14,11 @@ class WorkSubWork < ActiveRecord::Base
   #.joins('LEFT OUTER JOIN zakazchik ON zakazchik.id_zakazchik = work_sub_works.id_zakazchik').joins('LEFT OUTER JOIN managers ON managers.id_manager = work_sub_works.id_manager').joins('LEFT OUTER JOIN otdel_dfct ON otdel_dfct.id_otdel = work_sub_works.id_otdel')
   #.joins(:zakazchik, :otdel_dfct, :manager)
   
+  # Выборка элементов в последовательности, соответствующей массиву
+  def self.ordered_by_array(arr)
+    order("field(id_work, #{arr.join(',')})").where(:id_work => arr)
+  end
+  
   def start
 	self[:date_start].strftime("%d.%m.%Y") || '-'
   end
@@ -22,46 +27,46 @@ class WorkSubWork < ActiveRecord::Base
 	self[:date_stop].strftime("%d.%m.%Y") || '-'
   end
   
-  def self.ordered(param, cond=Hash.new)
-	cond[:id_sub_work] = 0
-	if param == '3'
-		first = WorkSubWork.joins('LEFT OUTER JOIN otdel_dfct ON otdel_dfct.id_otdel = work_sub_works.id_otdel').where(cond).order('otdel_dfct.name_small, work_sub_works.name_small').pluck(:id_work)
-		aux = WorkSubWork.select('id_work, id_sub_work').where('id_sub_work > ?', 0).joins('LEFT OUTER JOIN otdel_dfct ON otdel_dfct.id_otdel = work_sub_works.id_otdel').order('otdel_dfct.name_small, work_sub_works.name_small')
-	elsif param == '2'
-		first = WorkSubWork.joins('LEFT OUTER JOIN managers ON managers.id_manager = work_sub_works.id_manager').where(cond).order('managers.fio, work_sub_works.name_small').pluck(:id_work)
-		aux = WorkSubWork.select('id_work, id_sub_work').where('id_sub_work > ?', 0).joins('LEFT OUTER JOIN managers ON managers.id_manager = work_sub_works.id_manager').order('managers.fio, work_sub_works.name_small')
-	else
-		first = WorkSubWork.joins('LEFT OUTER JOIN zakazchik ON zakazchik.id_zakazchik = work_sub_works.id_zakazchik').where(cond).order('zakazchik.name_small, work_sub_works.name_small').pluck(:id_work)
-		aux = WorkSubWork.select('id_work, id_sub_work').where('id_sub_work > ?', 0).joins('LEFT OUTER JOIN zakazchik ON zakazchik.id_zakazchik = work_sub_works.id_zakazchik').order('zakazchik.name_small, work_sub_works.name_small')
-	end
-	sub_hash = Hash.new
-	aux.each do |a|
-		unless sub_hash.key? a.id_sub_work
-			sub_hash[a.id_sub_work] = Array.new
-		end
-		sub_hash[a.id_sub_work] << a.id_work
-	end
-	
-	i = 1
-	a = Array.new
-	first.each do |fst|
-		if sub_hash.key? fst
-			first.insert(i, sub_hash[fst])
-			first.flatten!
-		end
-		i += 1
-	end
-	
-	return first
+   def self.ordered(param, cond=Hash.new)
+    cond[:id_sub_work] = 0
+    if param == '3'
+      first = WorkSubWork.joins('LEFT OUTER JOIN otdel_dfct ON otdel_dfct.id_otdel = work_sub_works.id_otdel').where(cond).order('otdel_dfct.name_small, work_sub_works.name_small').pluck(:id_work)
+      aux = WorkSubWork.select('id_work, id_sub_work').where('id_sub_work > ?', 0).joins('LEFT OUTER JOIN otdel_dfct ON otdel_dfct.id_otdel = work_sub_works.id_otdel').order('otdel_dfct.name_small, work_sub_works.name_small')
+    elsif param == '2'
+      first = WorkSubWork.joins('LEFT OUTER JOIN managers ON managers.id_manager = work_sub_works.id_manager').where(cond).order('managers.fio, work_sub_works.name_small').pluck(:id_work)
+      aux = WorkSubWork.select('id_work, id_sub_work').where('id_sub_work > ?', 0).joins('LEFT OUTER JOIN managers ON managers.id_manager = work_sub_works.id_manager').order('managers.fio, work_sub_works.name_small')
+    else
+      first = WorkSubWork.joins('LEFT OUTER JOIN zakazchik ON zakazchik.id_zakazchik = work_sub_works.id_zakazchik').where(cond).order('zakazchik.name_small, work_sub_works.name_small').pluck(:id_work)
+      aux = WorkSubWork.select('id_work, id_sub_work').where('id_sub_work > ?', 0).joins('LEFT OUTER JOIN zakazchik ON zakazchik.id_zakazchik = work_sub_works.id_zakazchik').order('zakazchik.name_small, work_sub_works.name_small')
+    end
+    sub_hash = Hash.new
+    aux.each do |a|
+      unless sub_hash.key? a.id_sub_work
+        sub_hash[a.id_sub_work] = Array.new
+      end
+      sub_hash[a.id_sub_work] << a.id_work
+    end
+
+    i = 1
+    a = Array.new
+    first.each do |fst|
+      if sub_hash.key? fst
+        first.insert(i, sub_hash[fst])
+        first.flatten!
+      end
+      i += 1
+    end
+
+    return first
   end
   
   def self.tree(id)
-	id = id.to_i
-	works = WorkSubWork.select('id_work, id_sub_work').order('name_small').all
-	a = Hash.new
-	works.each do |work|
-		a[work.id_work] = work.id_sub_work
-	end
+	  id = id.to_i
+	  works = WorkSubWork.select('id_work, id_sub_work').order('name_small').all
+	  a = Hash.new
+	  works.each do |work|
+		  a[work.id_work] = work.id_sub_work
+	  end
 	
 	b = Hash.new
 	works.each do |work|
