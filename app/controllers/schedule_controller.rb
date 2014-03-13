@@ -20,6 +20,7 @@ class ScheduleController < ApplicationController
   
   # Персональные задачи
   def tasks
+    @fio = session[:my_name]
     
   end
 end

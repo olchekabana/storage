@@ -13,5 +13,6 @@ class ApplicationController < ActionController::Base
   
   def set_sort_schedule
     cookies[:sort_schedule] ||= 1
+    
   end
 end
