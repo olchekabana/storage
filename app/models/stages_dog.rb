@@ -13,6 +13,10 @@ class StagesDog < ActiveRecord::Base
     order("field(id_stages_dog, #{arr.join(',')})").where(:id_stages_dog => arr)
   end
   
+  def self.id_in_array(arr)
+    where(:id_stages_dog => arr)
+  end
+  
   # Более удобные методы обращения к полям таблицы
   
   #def name

@@ -19,6 +19,8 @@ class WorksDog < ActiveRecord::Base
   scope :group_works, group(:id_work)
   scope :select_stages, select(:id_stages_dog) 
   scope :select_works, select(:id_work)
+  
+  scope :stageless, where("id_stages_dog = 0").order("date_stop")
   #scope :contracts, select(:id_work).order(:date_stop).group(:id_work)
   
   # Метод тут потому что прогресс выполнения высчитывается по заданиям
@@ -45,6 +47,39 @@ class WorksDog < ActiveRecord::Base
     return works || []
   end
   
+  # Поиск заданий без этапов
+  def self.search_stageless(type=1)
+    type = type.to_i
+    # тип фильтрации
+    # 1 - не завершенные
+    # 2 - завершенные
+    # 3 - все
+    if type == 1 || type == 2
+      works = self.where("status < 3").stageless.group_works
+    end
+    if type == 3
+      works = self.stageless.group_works
+    end
+    if type == 2
+      works_completed = self.where("status = 3").stageless.group_works
+      works = works_completed - (works_completed & works)
+    end
+    return works || []
+  end
+  
+  # Список работ с заданиями не привязанными к этапам, упорядоченными по их срокам сдачи
+  def self.stageless_contracts(type=1)
+    works = WorksDog.search_stageless(type)
+    works.map!{|x| x.work_id} unless works.empty?
+  end
+  
+  # Массив заданий без этапа разбитых по work_id
+  def self.stageless_list(type=1)
+    works = self.search_stageless(type)
+    tasks = works.group_by{|s| s.work_id} unless works.empty?
+    return tasks || []
+  end
+  
   # Метод тут потому что прогресс выполнения высчитывается по заданиям
   # Выборка id этапов в соответствии с фильтром
   # Необязательное значение по умолчанию, присвоение кукисов с типом сортировки в before_filter
@@ -67,6 +102,17 @@ class WorksDog < ActiveRecord::Base
       stages = stages_completed - (stages_completed & stages)
     end
     return stages || []
+  end
+  
+  # Массив этапов разбитых по work_id
+  def self.stages_list(type=1)
+    list = self.stages(type)
+    stages = StagesDog.id_in_array(list)
+    unless stages.empty?
+      stages.sort_by!{|s| [s.date_stop, s.id]}
+      stages_list = stages.group_by{|s| s.work_id}
+    end
+    return stages_list || []
   end
   
   # Более удобные методы обращения к полям таблицы

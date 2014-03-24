@@ -8,13 +8,15 @@ class ScheduleController < ApplicationController
   def stages
     @fio = session[:my_name]
     contracts_list = WorksDog.contracts(cookies[:sort_schedule])
-    if contracts_list.length == 0
+    stageless_list = WorksDog.stageless_contracts(cookies[:sort_schedule])
+    # Временная сортировка без совместного учета stages_dog.date_stop и works_dog.date_stop для заданий без этапа
+    list = contracts_list | stageless_list
+    if list.empty?
       render :template => ""
     else
-      @contracts = WorkSubWork.select("id_work, name_small").ordered_by_array(contracts_list)
-      stages_list = WorksDog.stages(cookies[:sort_schedule])
-      stages = StagesDog.ordered_by_array(stages_list)
-      @stages = stages.sort_by{|s| [(contracts_list.index s.work_id), s.date_stop, s.id]}
+      @contracts = WorkSubWork.select("id_work, name_small").ordered_by_array(list)
+      @stages = WorksDog.stages_list(cookies[:sort_schedule])
+      @tasks = WorksDog.stageless_list(cookies[:sort_schedule])
     end
   end
   
