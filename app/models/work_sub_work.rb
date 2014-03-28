@@ -110,14 +110,14 @@ class WorkSubWork < ActiveRecord::Base
   end
   
   def tree_name(c)
-	id = self[:id]
-	name = ""
-	until c[0][id] == 0
-		name = c[1][id] + "/" + name
-		id = c[0][id]
-	end
-	name = c[1][id] + "/" + name
-	return name.chop!
+	  id = self[:id]
+	  name = ""
+	  until c[0][id] == 0
+		  name = c[1][id] + "/" + name
+		  id = c[0][id]
+	  end
+	  name = c[1][id] + "/" + name
+	  return name.chop!
   end
   
 end

@@ -1,6 +1,8 @@
 class StagesDog < ActiveRecord::Base
+  include CalcDate
+  
   #attr_accessible :title, :body
-  belongs_to :work_sub_works, :foreign_key => "id_work"
+  belongs_to :work_sub_work, :foreign_key => "id_work"
   has_many :works_dog, :foreign_key => "id_stages_dog"
   
   # Защита от внезапного перименования полей бд
@@ -18,6 +20,10 @@ class StagesDog < ActiveRecord::Base
   end
   
   # Более удобные методы обращения к полям таблицы
+  # дней до сдачи проекта
+  def days_remain
+    (self[:date_stop].to_date - Date.today).to_i
+  end
   
   #def name
   def index

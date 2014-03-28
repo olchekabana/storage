@@ -1,13 +1,14 @@
 class WorksDog < ActiveRecord::Base
+  include CalcDate
 # Рабочие задания
 #
 #
   
   # attr_accessible :title, :body
   belongs_to :stages_dog, :foreign_key => "id_stages_dog"
-  belongs_to :users, :foreign_key => "id_isp"
-  belongs_to :work_sub_works, :foreign_key => "id_work"
-  belongs_to :users, :foreign_key => "id_manag"
+  belongs_to :work_sub_work, :foreign_key => "id_work"
+  belongs_to :user, :foreign_key => "id_manag", :select => "fio"
+  #belongs_to :users, :foreign_key => "id_isp"
   
   # Защита от внезапного перименования полей бд
   # default_scope where("id_isp = ?", session[:user_id])
@@ -115,7 +116,11 @@ class WorksDog < ActiveRecord::Base
     return stages_list || []
   end
   
+  def self.staged(stage_id)
+    where("works_dog.id_stages_dog = ?", stage_id).joins(:user).order("works_dog.date_stop")
+  end
   # Более удобные методы обращения к полям таблицы
+
   def stage_id
     self[:id_stages_dog]
   end

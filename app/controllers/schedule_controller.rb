@@ -23,6 +23,15 @@ class ScheduleController < ApplicationController
   # Персональные задачи
   def tasks
     @fio = session[:my_name]
+    if params[:id] == "0"
+      @tasks = WorksDog.where("id_work = ?", params[:work_id]).stageless
+      work = WorkSubWork.find(params[:work_id])
+      @work_name = work.name_small
+    else
+      @stage = StagesDog.joins(:work_sub_work).find(params[:id])
+      @tasks = WorksDog.staged(params[:id])
+      @work_name = @stage.work_sub_work.name_small
+    end
     
   end
 end

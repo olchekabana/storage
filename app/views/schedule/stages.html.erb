@@ -1,0 +1,43 @@
+<div class="content">
+	<% @contracts.each do |contract| %>
+		<h1><%= contract.name_small %></h1>
+		<% 
+		if @tasks.key? contract.id 
+			task = @tasks[contract.id][0]
+			time = task.time_remain
+			%>
+			<div class="content-item">
+				<h2>Задания без этапа</h2>
+				<ul class="info-ul">
+					<li><span class="icon-calendar tipped" data-tooltip="Сроки"></span><li>c <%= task.start %> по <%= task.stop %>
+					<li><span class="icon-calendar tipped" data-tooltip="Осталось дней"></span><li>
+						<% if time["exceed"] %>Осталось <% else %>Просрочено на <% end %>
+						<% unless time["days"] == 0 %><%= time["days"] %>дн. <% end %>
+						<% unless time["months"] == 0 %><%= time["months"] %>мес. <% end %>
+						<% unless time["years"] == 0 %><%= time["years"]  %>г.<% end %>
+				</ul>
+			</div>
+		<% end %>
+		
+		<% 
+		# Список этапов
+		if @stages.key? contract.id
+			@stages[contract.id].each do |stage|
+				time = stage.time_remain %>
+				<div class="content-item">
+					<h2><%= stage.index %> - <%= stage.name %></h2>
+					<h3><%= stage.comment %></h3>
+					<ul class="info-ul">
+						<li><span class="icon-calendar tipped" data-tooltip="Сроки"></span><li>c <%= stage.start %> по <%= stage.stop %>
+						<li><span class="icon-calendar tipped" data-tooltip="Осталось дней"></span><li>
+							<% if time["exceed"] %>Осталось <% else %>Просрочено на <% end %>
+							<% unless time["days"] == 0 %><%= time["days"] %>дн. <% end %>
+							<% unless time["months"] == 0 %><%= time["months"] %>мес. <% end %>
+							<% unless time["years"] == 0 %><%= time["years"]  %>г.<% end %>
+					</ul>
+				</div>
+			<% 
+			end
+		end
+	end %>
+</div>
