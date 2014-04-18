@@ -1,0 +1,26 @@
+<%= form_for(:task, :url => status_path, :remote => true, :html => { class: 'form', id: "form_#{task.id}"} ) do |f| %>
+	<%= f.hidden_field :id, :value => task.id, :id => "task_id_#{task.id}" %>
+	<% if task.status < 2 %>
+		<%= hidden_field_tag 'set_status', 'true', id: "set_status_#{task.id}", class: 'set_status' %>
+	<% else %>
+		<%= hidden_field_tag 'set_status', 'false', id: "set_status_#{task.id}", class: 'set_status' %>
+	<% end %>
+	
+	<div>
+		<% case 
+			when task.status == 0 %>
+				<%= f.submit :value => "Принято" %>
+			<%
+			when task.status == 1 %>
+				<%= f.submit :value => "Выполняется" %>
+			<%
+			when task.status == 2 %>
+				<div class = "result none">
+					<span>Отчет о проделанной работе</span><br />
+					<%= f.text_area :result, :class => "text", :id => "task_result_#{task.id}" %>
+				</div>
+				<%= button_tag 'Заполнить отчет', :type => 'button', :class => 'report', 'data-hide' => 'Скрыть отчет', 'data-show' => 'Заполнить отчет' %>
+				<%= button_tag "Завершено", :type => 'button', :class => 'submit none', 'data-id' => task.id %>
+		<% end %>
+	</div>
+<% end %>

@@ -30,10 +30,10 @@
 					<ul class="info-ul">
 						<li><span class="icon-calendar tipped" data-tooltip="Сроки"></span><li>c <%= stage.start %> по <%= stage.stop %>
 						<li><span class="icon-calendar tipped" data-tooltip="Осталось дней"></span><li>
-							<% if time["exceed"] %>Осталось <% else %>Просрочено на <% end %>
-							<% unless time["days"] == 0 %><%= time["days"] %>дн. <% end %>
-							<% unless time["months"] == 0 %><%= time["months"] %>мес. <% end %>
+							<% if time["exceed"] %>Просрочено на <% else %>Осталось <% end %>
 							<% unless time["years"] == 0 %><%= time["years"]  %>г.<% end %>
+							<% unless time["months"] == 0 %><%= time["months"] %>мес. <% end %>
+							<% unless time["days"] == 0 %><%= time["days"] %>дн. <% end %>
 					</ul>
 				</div>
 			<% 

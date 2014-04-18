@@ -223,21 +223,24 @@ nav input,
 	}
 	
 	input[type="submit"], button{
-		-webkit-appearance: none;
-		background: $monochr-color;
-		border: 0;
-		border-radius: 3px;
-		color: $main-ftcolor;
-		font: $input-ft;
-		margin-left: 15px;
-		padding: 6px 10px;
-		
-		float: right;
+	  margin-left: 15px;
+	  float: right;
 	}
-	
-	input[type="submit"]:hover, button:hover{
-		background: $monochr-h-color;
-	}
+}
+input[type="submit"], button{
+  -webkit-appearance: none;
+  background: $monochr-color;
+  border: 0;
+  border-radius: 3px;
+  color: $main-ftcolor;
+  font: $input-ft;
+  outline: none;
+  padding: 6px 10px;
+  //float: right;
+}
+
+input[type="submit"]:hover, button:hover{
+  background: $monochr-h-color;
 }
 
 // Логин
@@ -267,6 +270,26 @@ nav input,
 	div:last-child{
 		margin: 10px 0;
 	}
+}
+
+.comfirmaton{
+  box-sizing: border-box;
+  -moz-box-sizing: border-box;
+  background: $body-bgcolor;
+  border: 1px solid $monochr-h-color;
+  border-radius: 3px;
+  padding: 20px;
+  width: 500px;
+  overflow: hidden;
+  
+  div{
+    margin-top: 15px;
+  }
+  
+  button{
+    float: right;
+    margin-left: 15px;
+  }
 }
 
 // модальные окна
@@ -388,13 +411,45 @@ nav input,
 	left: 0;
 }
 
+.offset{
+  left: 50px;
+  
+  .wrapper{
+    position: relative;
+    left: -50px;
+  }
+}
+
 .trip-block{
 	a{
 		color: $trip-link-ftcolor;
 	}
 }
 
+.alert{
+  color: $help-color;
+}
+
 .archive-struct{
 	width: 136px;
 }
- 
+
+.stat{
+  display: inline-block;
+  padding: 2px 6px;
+  border-radius: 3px;
+  color: $header-ftcolor;
+  font-weight: bold;
+}
+
+.accept{
+  background: $filter-color;
+}
+
+.process{
+  background: $view-lighter;
+}
+
+.ready{
+  background: $label-color;
+}

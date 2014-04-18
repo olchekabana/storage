@@ -24,6 +24,8 @@ Storage::Application.routes.draw do
   match 'filter' => 'document#filter', :as => :filter
   match 'search' => 'document#search', :as => :search
   
+  match 'schedule/update_status' => 'schedule#update_status', :as => :status, :via => :post
+  
   match 'file/:fold/show/:id' => 'file#show'
   
   # Sample of named route:

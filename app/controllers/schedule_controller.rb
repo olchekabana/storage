@@ -1,4 +1,5 @@
 class ScheduleController < ApplicationController
+  respond_to :html, :js
   before_filter :set_sort_schedule, :check_auth, :my_name
   
   # Временный костыль, пока не откорректирован document_controller.rb и партиал header
@@ -18,7 +19,7 @@ class ScheduleController < ApplicationController
       @stages = WorksDog.stages_list(cookies[:sort_schedule])
       @tasks = WorksDog.stageless_list(cookies[:sort_schedule])
     end
-  end
+  end 
   
   # Персональные задачи
   def tasks
@@ -34,4 +35,20 @@ class ScheduleController < ApplicationController
     end
     
   end
+  
+  def update_status
+    @task = WorksDog.find(params[:task][:id])
+    if params[:set_status] == "true"
+      # if
+      
+    else
+      @task.result = params[:task][:result]
+    end
+    @task.status += 1
+    @task.save
+    respond_to do |format|
+      format.js
+    end
+  end
 end
+ 
