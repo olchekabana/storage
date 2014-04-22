@@ -119,6 +119,27 @@ class WorksDog < ActiveRecord::Base
   def self.staged(stage_id)
     where("works_dog.id_stages_dog = ?", stage_id).joins(:user).order("works_dog.date_stop")
   end
+  
+  def self.tasks_list(id, type=1)
+    type = type.to_i
+    # тип фильтрации
+    # 1 - не завершенные
+    # 2 - завершенные
+    # 3 - все
+    if type == 1 || type == 2
+      tasks = self.where("works_dog.status < 3 AND works_dog.id_work = ?", id).joins(:user).order("works_dog.id_stages_dog, works_dog.date_stop")
+    end
+    if type == 3
+      tasks = self.where("works_dog.id_work = ?", id).joins(:user).order("works_dog.id_stages_dog, works_dog.date_stop")
+    end
+    if type == 2
+      tasks_completed = self.where("works_dog.status = 3 AND works_dog.id_work = ?", id).joins(:user).order("works_dog.id_stages_dog, works_dog.date_stop")
+      tasks = tasks_completed - (tasks_completed & tasks)
+    end
+    tasks = tasks.group_by{|t| t.stage_id} unless tasks.empty?
+    return tasks || []
+    #tasks
+  end
   # Более удобные методы обращения к полям таблицы
 
   def stage_id

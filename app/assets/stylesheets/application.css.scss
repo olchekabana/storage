@@ -356,6 +356,17 @@ input[type="submit"]:hover, button:hover{
 	color: $header-ftcolor;
 	opacity: 0.9;
 	
+	#contract-link{
+	  display: inline-block;
+	  padding: 0 5px;
+	  cursor: pointer;
+	  max-width: 870px;
+	}
+	
+	#contract-link:hover{
+	  background: rgba(255, 255, 255, 0.3);
+	}
+	
 	a{
 		color: $header-ftcolor;
 	}
@@ -404,6 +415,13 @@ input[type="submit"]:hover, button:hover{
 		display: inline-block;
 		height: 100%;
 		line-height: 29px;
+		max-width: 960px;
+	}
+	
+	span, a{
+	  overflow: hidden;
+	  text-overflow: ellipsis;
+	  white-space: nowrap;
 	}
 }
 

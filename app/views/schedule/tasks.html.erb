@@ -11,44 +11,24 @@
 </div>
 <div class="params none-pan offset">
 	<div class="wrapper">
-		<span>Договор: <%= @work_name %></span>
+		<span><span>Договор: </span><%= link_to @work_name, tasks_path(params[:id], ''), id: 'contract-link', title: @work_name %></span>
 	</div>
 </div>
 <div class="content lower">
-	<% if params[:id] == "0" %>
-		<h1>Задания без этапа</h1>
+	<% if params[:stage_id].nil? %>
+		<% 
+		if @tasks.key? 0
+			tasks = @tasks[0] %>
+				<%= render partial: 'task', :locals => { :tasks => tasks, :stage_id => "0", :link => true} %>
+		<%
+		end
+		@stages.each do |stage|
+			if @tasks.key? stage.id
+				tasks = @tasks[stage.id] %>
+					<%= render partial: 'task', :locals => { :tasks => tasks, :stage => stage, :stage_id => params[:stage_id], :link => true} %>
+			<% end %>
+		<% end %>
 	<% else %>
-		<h1><%= @stage.index %> - <%= @stage.name %></h1>
-	<%
-	end
-	@tasks.each do |task|
-		time = task.time_remain
-	%>
-		<div class="content-item">
-			<h2><%= task.index %> - <%= task.name %></h2>
-			<%= task.comment %>
-			<ul class="info-ul">
-				<li><span class="icon-user tipped" data-tooltip="Руководитель"></span><li><%= task.user.fio %>
-				<li><span class="icon-calendar tipped" data-tooltip="Сроки"></span><li>c <%= task.start %> по <%= task.stop %>
-				<li><span class="icon-calendar tipped" data-tooltip="Осталось дней"></span><li>
-					<% if time["exceed"] %>Просрочено на <% else %>Осталось <% end %>
-					<% unless time["years"] == 0 %><%= time["years"]  %>г.<% end %>
-					<% unless time["months"] == 0 %><%= time["months"] %>мес. <% end %>
-					<% unless time["days"] == 0 %><%= time["days"] %>дн. <% end %>
-				<li><span class="icon-calendar tipped" data-tooltip="Статус"></span><li>
-					<% case 
-						when task.status == 0 %><span class="stat accept">Задание создано</span>
-						<%
-						when task.status == 1 %><span class="stat process">Задание принято</span>
-						<%
-						when task.status == 2 %><span class="stat process">Задание выполняется</span>
-						<%
-						when task.status == 3 %><span class="stat ready">Задание выполнено</span>
-					<% end %>
-			</ul>
-			<div id=<%= "wrap_form_#{task.id}" %> >
-				<%= render partial: 'form', :locals => { :task => task } %>
-			</div>
-		</div>
+		<%= render partial: 'task', :locals => { :tasks => @tasks, :stage => @stage, :stage_id => params[:stage_id], :link => false} %>
 	<% end %>
 </div>

@@ -1,1 +1,2 @@
 $("#wrap_form_<%= @task.id %>").empty().html("<%= escape_javascript(render partial: 'form', :locals => { :task => @task }) %>")
+$("#item_<%= @task.id %> .status").empty().html("<%= escape_javascript(render partial: 'status', :locals => { :task => @task }) %>")

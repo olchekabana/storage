@@ -1,0 +1,9 @@
+<% case 
+	when task.status == 0 %><span class="stat accept">Задание создано</span>
+	<%
+	when task.status == 1 %><span class="stat process">Задание принято</span>
+	<%
+	when task.status == 2 %><span class="stat process">Задание выполняется</span>
+	<%
+	when task.status == 3 %><span class="stat ready">Задание выполнено</span>
+<% end %>

@@ -13,6 +13,11 @@
 				<li><%= link_to_unless((current_page?(:controller=>"document", :action=>"standards") || current_page?(:controller=>"document", :action=>"show_standard")), "ГОСТЫ", standards_path, class: "menu") do
 						link_to(content_tag(:span, "ГОСТЫ"), standards_path, class: "sel")
 					end %>
+				<% unless session[:user_id].nil? %>
+				<li><%= link_to_unless((current_page?(stages_path) || current_page?(controller: "schedule", action: "tasks")), "ПЛАН-ГРАФИК", stages_path, class: "menu") do
+						link_to(content_tag(:span, "ПЛАН-ГРАФИК"), stages_path, class: "sel")
+					end %>
+				<% end %>
 				</li>
 			</ul>
 		
@@ -41,5 +46,5 @@
 	</div>
 </div>
 <div class="fio none">Выйти из профиля</div>
-<div class="none" id="errors" data-cant-show="Часть выбранных файлов невозможно<br />отобразить в браузере" data-cant-show-all="Выбранные файлы невозможно отобразить в браузере" ></div>
+<div class="none" id="errors" data-cant-show="Часть выбранных файлов невозможно<br />отобразить в браузере" data-cant-show-all="Выбранные файлы невозможно отобразить в браузере" data-empty="Необходимо заполнить отчет о проделанной работе"></div>
 <div class="trip none" data-prev="Назад" data-next="Дальше" data-finish="Закрыть" data-step1="Меню выбора раздела" data-step2="Поиск по названию договора/стандарта" data-step3="Вызов формы авторизации/выход из профиля" data-step4="Вспомогательное меню фильтрации<br /> и сортировки результатов" data-step5="Название-ссылка на конкретный договор/стандарт" data-step6="Ссылка на договор/стандарт" data-step7="Переключение между списком прикреплённых <br /> документов и информацией о дороворе"></div>

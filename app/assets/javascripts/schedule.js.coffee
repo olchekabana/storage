@@ -20,22 +20,37 @@ $ ->
        submit.fadeOut(350)
   )
   
-  # Отправка формы с отчетом о работе
-  #$('.content-item').on('submit', '.form'
-    #->
-     # if $(this).find('.set_status').val() == "false"
-        #alert(1)
-      #  $('#confirm').arcticmodal();
-        
-      #  return false
- # )
+  block_fade_out = (block) ->
+    dfd = $.Deferred()
+    block.fadeOut(350, dfd.resolve)
+    return dfd.promise()
   
   $('.content-item').on('click', '.submit'
     ->
-      $('#confirm').arcticmodal({
-        afterClose: (data, el) -> $('#confirm').removeAttr('data-id')
-      })
-      $('#confirm').attr('data-id', $(this).attr('data-id'))
+      id = $(this).attr('data-id')
+      if $('#task_result_'+id).val().trim() != ''
+        $('#confirm').arcticmodal({
+          afterClose: (data, el) -> $('#confirm').removeAttr('data-id')
+        })
+        $('#confirm').attr('data-id', id)
+      else
+        content = $("#errors").data("empty")
+        $(".tooltip").remove()
+        x = $(this).innerWidth()/2 + $(this).offset().left
+        y = $(this).offset().top
+        tooltip = jQuery(document.createElement('div'))
+          .addClass("tooltip")
+          .text(content)
+          .appendTo("body")
+          .css({'max-width': '250px', 'text-align': 'center'})
+        x -= tooltip.innerWidth()/2
+        y -= tooltip.outerHeight()+10
+        
+        tooltip.css({'top': y+'px', 'left': x+'px'}).fadeIn(300).delay(3000)
+        block_fade_out(tooltip).done(
+          ->
+            $(".tooltip").remove()
+        )
   )
   
   $('#cancel').click(
