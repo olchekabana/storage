@@ -1,7 +1,7 @@
 <% if stage_id == "0" %>
 	<h1>
-		<%= link_to_if(link, "Задания без этапа", tasks_path(tasks[0].work_id, 0)) do
-			"Задания без этапа"
+		<%= link_to_if(link, "Задачи без этапа", tasks_path(tasks[0].work_id, 0)) do
+			"Задачи без этапа"
 		end %>
 	</h1>
 <% else %>
@@ -22,12 +22,12 @@ tasks.each do |task|
 		<ul class="info-ul">
 			<li><span class="icon-user tipped" data-tooltip="Руководитель"></span><li><%= task.user.fio %>
 			<li><span class="icon-calendar tipped" data-tooltip="Сроки"></span><li>c <%= task.start %> по <%= task.stop %>
-			<li><span class="icon-calendar tipped" data-tooltip="Осталось дней"></span><li>
+			<li><span class="icon-add-clock-o tipped" data-tooltip="Осталось дней"></span><li>
 				<% if time["exceed"] %>Просрочено на <% else %>Осталось <% end %>
 				<% unless time["years"] == 0 %><%= time["years"]  %>г.<% end %>
 				<% unless time["months"] == 0 %><%= time["months"] %>мес. <% end %>
 				<% unless time["days"] == 0 %><%= time["days"] %>дн. <% end %>
-			<li><span class="icon-calendar tipped" data-tooltip="Статус"></span><li class="status" >
+			<li><span class="icon-add-uniF550 tipped" data-tooltip="Статус"></span><li class="status" >
 				<%= render partial: 'status', :locals => { :task => task } %>
 		</ul>
 		<div id=<%= "wrap_form_#{task.id}" %> >

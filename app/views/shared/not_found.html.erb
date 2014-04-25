@@ -14,11 +14,30 @@
 <% if current_page?(search_path) %>
 	<div class="params none-pan">
 		<div class="wrapper">
-			<span>Результаты поиска по запросу: "<%= params[:search] %>"</span>
+			<span title="<%= params[:search] %>" >Результаты поиска по запросу: "<%= params[:search] %>"</span>
+		</div>
+	</div>
+<% end %>
+<% if current_page?(:controller => "schedule", :action => "tasks") %>
+	<div class="params none-pan offset">
+		<div class="wrapper">
+			<span><span>Договор: </span><%= link_to @work_name, tasks_path(params[:id], ''), id: 'contract-link', title: @work_name %></span>
 		</div>
 	</div>
 <% end %>
 
-<div class="content lower">
-	<div class="not-found">Ничего не найдено</div>
-</div>
+<% if current_page?(:controller => "schedule", :action => "tasks") %>
+	<div class="content lower">
+		<% if params[:stage_id] == "0" %>
+			<h1>Задачи без этапа</h1>
+		<% end %>
+		<% if params[:stage_id] != "0" && !params[:stage_id].nil? %>
+			<h1><%= @stage.index %> - <%= @stage.name%></h1>
+		<% end %>
+		<div class="not-found">Ничего не найдено, измените параметры фильтрации задач</div>
+	</div>
+<% else %>
+	<div class="content lower">
+		<div class="not-found">Ничего не найдено</div>
+	</div>
+<% end %>

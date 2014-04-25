@@ -8,10 +8,10 @@
 			time = task.time_remain
 			%>
 			<div class="content-item">
-				<h2><%= link_to 'Задания без этапа', path+'/'+contract.id.to_s+'/0/' %></h2>
+				<h2><%= link_to 'Задачи без этапа', path+'/'+contract.id.to_s+'/0/' %></h2>
 				<ul class="info-ul">
 					<li><span class="icon-calendar tipped" data-tooltip="Сроки"></span><li>c <%= task.start %> по <%= task.stop %>
-					<li><span class="icon-calendar tipped" data-tooltip="Осталось дней"></span><li>
+					<li><span class="icon-add-clock-o tipped" data-tooltip="Осталось дней"></span><li>
 						<% if time["exceed"] %>Осталось <% else %>Просрочено на <% end %>
 						<% unless time["days"] == 0 %><%= time["days"] %>дн. <% end %>
 						<% unless time["months"] == 0 %><%= time["months"] %>мес. <% end %>
@@ -30,7 +30,7 @@
 					<h3><%= stage.comment %></h3>
 					<ul class="info-ul">
 						<li><span class="icon-calendar tipped" data-tooltip="Сроки"></span><li>c <%= stage.start %> по <%= stage.stop %>
-						<li><span class="icon-calendar tipped" data-tooltip="Осталось дней"></span><li>
+						<li><span class="icon-add-clock-o tipped" data-tooltip="Осталось дней"></span><li>
 							<% if time["exceed"] %>Просрочено на <% else %>Осталось <% end %>
 							<% unless time["years"] == 0 %><%= time["years"]  %>г.<% end %>
 							<% unless time["months"] == 0 %><%= time["months"] %>мес. <% end %>

@@ -1,0 +1,47 @@
+@font-face {
+	font-family: 'icomoon_add';
+	src:url('icomoon_add.eot');
+	src:url('icomoon_add.svg') format('svg'),
+		url('icomoon_add.eot') format('embedded-opentype'),
+		url('icomoon_add.woff') format('woff'),
+		url('icomoon_add.ttf') format('truetype');
+	font-weight: normal;
+	font-style: normal;
+}
+
+[class^="icon-add-"], [class*=" icon-add-"] {
+	font-family: 'icomoon_add';
+	speak: none;
+	font-style: normal;
+	font-weight: normal;
+	font-variant: normal;
+	text-transform: none;
+	line-height: 1;
+
+	/* Better Font Rendering =========== */
+	-webkit-font-smoothing: antialiased;
+	-moz-osx-font-smoothing: grayscale;
+}
+
+.icon-add-tag:before {
+	content: "\e600";
+}
+.icon-add-uniF550:before {
+	content: "\e602";
+}
+.icon-add-price2:before {
+	content: "\e606";
+}
+.icon-add-tag2:before {
+	content: "\e607";
+}
+.icon-add-tag3:before {
+	content: "\e608";
+}
+.icon-add-signup:before {
+	content: "\e609";
+}
+.icon-add-clock-o:before {
+	content: "\f017";
+	padding-left: 1px;
+}

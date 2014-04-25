@@ -28,6 +28,48 @@
 				</ul>
 			</li>
 		<% end %>
+		<% if current_page?(stages_path) %>
+			<li class="hover">
+				<span class="sorting"><span class="icon icon-tree"></span></span>
+				<ul class="sub-hover">
+					<li class="item"><span>Показать этапы</span><span class="icon-caret-right"></span>
+					<li class="item2">
+						<ul>
+							<li><%= link_to_unless((cookies[:sort_stages].nil? || cookies[:sort_stages] == "1"), "Не завершенные", {action: "sorting_stages", id: "1"}) do %>
+										<span>Не завершенные</span><span class="icon-ok"></span>
+								<% end %>
+							<li><%= link_to_unless(cookies[:sort_stages] == "2", "Завершенные", {action: "sorting_stages", id: "2"}) do %>
+										<span>Завершенные</span><span class="icon-ok"></span>
+								<% end %>
+							<li><%= link_to_unless(cookies[:sort_stages] == "3", "Все", {action: "sorting_stages", id: "3"}) do %>
+										<span>Все</span><span class="icon-ok"></span>
+								<% end %>
+						</ul>
+					</li>
+				</ul>
+			</li>
+		<% end %>
+		<% if current_page?(:controller => "schedule", :action => "tasks") %>
+			<li class="hover">
+				<span class="sorting"><span class="icon icon-tree"></span></span>
+				<ul class="sub-hover">
+					<li class="item"><span>Показать задачи</span><span class="icon-caret-right"></span>
+					<li class="item2">
+						<ul>
+							<li><%= link_to_unless((cookies[:sort_tasks].nil? || cookies[:sort_tasks] == "1"), "Не завершенные", {action: "sorting_tasks", id: "1"}) do %>
+										<span>Не завершенные</span><span class="icon-ok"></span>
+								<% end %>
+							<li><%= link_to_unless(cookies[:sort_tasks] == "2", "Завершенные", {action: "sorting_tasks", id: "2"}) do %>
+										<span>Завершенные</span><span class="icon-ok"></span>
+								<% end %>
+							<li><%= link_to_unless(cookies[:sort_tasks] == "3", "Все", {action: "sorting_tasks", id: "3"}) do %>
+										<span>Все</span><span class="icon-ok"></span>
+								<% end %>
+						</ul>
+					</li>
+				</ul>
+			</li>
+		<% end %>
 		<li class="hover">
 			<span class="help"><span class="icon icon-question"></span></span>
 			<ul>

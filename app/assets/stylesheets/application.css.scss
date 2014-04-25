@@ -10,6 +10,7 @@
  *
  *= require_self.
  *= require style
+ *= require style_add
  *= require jquery.arcticmodal
  *= require trip.min
  */
@@ -470,4 +471,15 @@ input[type="submit"]:hover, button:hover{
 
 .ready{
   background: $label-color;
+}
+
+// медиа-запросы
+@media screen and (max-width: 1125px){
+  .params .wrapper{
+    margin-left: 85px;
+  }
+  
+  .header-content{
+    margin-left: 8px !important;
+  }
 }

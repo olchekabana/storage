@@ -99,7 +99,7 @@ class WorksDog < ActiveRecord::Base
     stages.map!{|x| x.stage_id} unless stages.nil?
     if type == 2
       stages_completed = self.select_stages.where("status = 3").group_stages
-      stages_completed.map!{|x| x.stage_id} unless stagstages_completedes.nil?
+      stages_completed.map!{|x| x.stage_id} unless stages_completed.nil?
       stages = stages_completed - (stages_completed & stages)
     end
     return stages || []
@@ -120,7 +120,20 @@ class WorksDog < ActiveRecord::Base
     where("works_dog.id_stages_dog = ?", stage_id).joins(:user).order("works_dog.date_stop")
   end
   
-  def self.tasks_list(id, type=1)
+  def self.where_status(type=1)
+    type = type.to_i
+    if type == 1
+      return where("status < 3")
+    end
+    if type == 2
+      return where("status = 3")
+    end
+    if type == 3
+      return where("")
+    end
+  end
+  
+  def self.tasks_list(id, type)
     type = type.to_i
     # тип фильтрации
     # 1 - не завершенные
@@ -129,16 +142,16 @@ class WorksDog < ActiveRecord::Base
     if type == 1 || type == 2
       tasks = self.where("works_dog.status < 3 AND works_dog.id_work = ?", id).joins(:user).order("works_dog.id_stages_dog, works_dog.date_stop")
     end
+    if type == 2
+      tasks = self.where("works_dog.status = 3 AND works_dog.id_work = ?", id).joins(:user).order("works_dog.id_stages_dog, works_dog.date_stop")
+      # tasks_completed = self.where("works_dog.status = 3 AND works_dog.id_work = ?", id).joins(:user).order("works_dog.id_stages_dog, works_dog.date_stop")
+      # tasks = tasks_completed - (tasks_completed & tasks)
+    end
     if type == 3
       tasks = self.where("works_dog.id_work = ?", id).joins(:user).order("works_dog.id_stages_dog, works_dog.date_stop")
     end
-    if type == 2
-      tasks_completed = self.where("works_dog.status = 3 AND works_dog.id_work = ?", id).joins(:user).order("works_dog.id_stages_dog, works_dog.date_stop")
-      tasks = tasks_completed - (tasks_completed & tasks)
-    end
     tasks = tasks.group_by{|t| t.stage_id} unless tasks.empty?
     return tasks || []
-    #tasks
   end
   # Более удобные методы обращения к полям таблицы
 

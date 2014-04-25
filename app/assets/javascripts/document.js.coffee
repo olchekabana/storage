@@ -156,29 +156,4 @@ $ ->
 		block.delay(150).animate({opacity: 0.0, marginLeft: '40px'}, 700, dfd.resolve)
 		return dfd.promise()
 	
-	$('.hover').hover(
-		->
-			block = $(this).find('.item')
-			block.stop(true, true).css("opacity", "1").delay(50).fadeIn(350)
-			
-			#block.css('display', 'block')
-			#block.delay(50).animate({opacity: 1.0, marginLeft: '0px'}, 700)	
-		->
-			block = $(this).find('.item')
-			#block.delay(50).clearQueue()
-
-			block.stop(true, true).css("opacity", "1").delay(50).fadeOut(350)
-			#hide_block(block).done(
-			#	->
-			#		block.css({'display':'none', 'opacity':'0', 'marginLeft':'40px'})
-			#)
-	)
 	
-	$('.sub-hover').hover(
-		->
-			block = $(this).children('.item2')
-			block.stop(true, true).fadeIn(300)
-		->
-			block = $(this).children('.item2')
-			block.stop(true, true).fadeOut(300)
-	)
