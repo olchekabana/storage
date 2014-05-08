@@ -1,14 +1,14 @@
 <% path = url_for(controller: 'schedule', action: 'tasks', only_path: true) %>
 <div class="content">
 	<% @contracts.each do |contract| %>
-		<h1><%= link_to contract.name_small, tasks_path(contract.id, '') %></h1>
+		<h1><%= link_to contract.name_small, tasks_path(contract.id, ''), class: 'step5' %></h1>
 		<% 
 		if @tasks.key? contract.id 
 			task = @tasks[contract.id][0]
 			time = task.time_remain
 			%>
 			<div class="content-item">
-				<h2><%= link_to 'Задачи без этапа', path+'/'+contract.id.to_s+'/0/' %></h2>
+				<h2><%= link_to 'Задачи без этапа', path+'/'+contract.id.to_s+'/0/', class: "step6" %></h2>
 				<ul class="info-ul">
 					<li><span class="icon-calendar tipped" data-tooltip="Сроки"></span><li>c <%= task.start %> по <%= task.stop %>
 					<li><span class="icon-add-clock-o tipped" data-tooltip="Осталось дней"></span><li>
@@ -26,7 +26,7 @@
 			@stages[contract.id].each do |stage|
 				time = stage.time_remain %>
 				<div class="content-item">
-					<h2><%= link_to stage.index+' - '+stage.name, path+'/'+contract.id.to_s+'/'+stage.id.to_s+'/' %></h2>
+					<h2><%= link_to stage.index+' - '+stage.name, path+'/'+contract.id.to_s+'/'+stage.id.to_s+'/', class: "step6" %></h2>
 					<h3><%= stage.comment %></h3>
 					<ul class="info-ul">
 						<li><span class="icon-calendar tipped" data-tooltip="Сроки"></span><li>c <%= stage.start %> по <%= stage.stop %>

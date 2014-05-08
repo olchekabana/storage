@@ -71,7 +71,11 @@
 			</li>
 		<% end %>
 		<li class="hover">
-			<span class="help"><span class="icon icon-question"></span></span>
+			<% if current_page?(:controller => "schedule", :action => "tasks") || current_page?(stages_path) %>
+				<span class="help plan"><span class="icon icon-question"></span></span>
+			<% else %>
+				<span class="help"><span class="icon icon-question"></span></span>
+			<% end %>
 			<ul>
 				<li class="item">Помощь
 			</ul>

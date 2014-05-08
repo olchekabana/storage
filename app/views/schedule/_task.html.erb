@@ -1,13 +1,13 @@
 <% if stage_id == "0" %>
 	<h1>
-		<%= link_to_if(link, "Задачи без этапа", tasks_path(tasks[0].work_id, 0)) do
-			"Задачи без этапа"
+		<%= link_to_if(link, "Задачи без этапа", tasks_path(tasks[0].work_id, 0), class: 'step6') do
+			content_tag('span', "Задачи без этапа", class: 'step6')
 		end %>
 	</h1>
 <% else %>
 	<h1>
-		<%= link_to_if(link, stage.index+" - "+stage.name, tasks_path(stage.work_id, stage.id)) do
-			stage.index+" - "+stage.name
+		<%= link_to_if(link, stage.index+" - "+stage.name, tasks_path(stage.work_id, stage.id), class: 'step6') do
+			content_tag('span', "#{stage.index} - #{stage.name}", class: 'step6')
 		end %>
 		
 	</h1>
@@ -17,7 +17,7 @@ tasks.each do |task|
 	time = task.time_remain
 %>
 	<div class="content-item" id="item_<%= task.id %>">
-		<h2><%= task.index %> - <%= task.name %></h2>
+		<h2><%= content_tag('span', "#{task.index} - #{task.name}", class: "step7") %></h2>
 		<%= task.comment %>
 		<ul class="info-ul">
 			<li><span class="icon-user tipped" data-tooltip="Руководитель"></span><li><%= task.user.fio %>

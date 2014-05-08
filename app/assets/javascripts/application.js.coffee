@@ -34,7 +34,7 @@ $ ->
 		   #callback: -> unless $('.content-item:first h2:first').length>0 then doLastOperation()
 	   },
 	   {
-		   sel : $('.content-item:first h2:first'),
+		   sel : $('.content-item:first h2:first a'),
 		   position : 's',
 		   delay: -1,
 		   content : trip_block.data('step5')
@@ -48,17 +48,69 @@ $ ->
 		   #callback: -> unless $('.attachment:first').length>0 then trip.stop()
 	   },
 	   {
-		   sel : $('.attachment:first'),
+		   sel : $('.attachment:visible').first(),
 		   position : 'n',
 		   delay: -1,
 		   content : trip_block.data('step7')
 	   }
 	], {
 			showNavigation: true,
+			skipUndefinedTrip: true,
 			prevLabel: trip_block.data('prev'),
 			nextLabel: trip_block.data('next'),
 			finishLabel: trip_block.data('finish')
 		})
+	
+	 trip_plan = new Trip([
+     { 
+       sel : $('#step1'),
+       position : 's',
+       delay: -1,
+       content : trip_block.data('step1')
+     },
+     {
+       sel : $('#step2'),
+       position : 's',
+       delay: -1,
+       content : trip_block.data('step2')
+     },
+     {
+       sel : $('#step3'),
+       position : 's',
+       delay: -1,
+       content : trip_block.data('step3')
+     },
+     {
+       sel : $('#step4'),
+       position : 'e',
+       delay: -1,
+       content : trip_block.data('step4')
+     },
+     {
+       sel : $('.step5').first(),
+       position : 's',
+       delay: -1,
+       content : trip_block.data('step5-1')
+     },
+     #{
+     #  sel : $('.step7').first(),
+     #  position : 's',
+     #  delay: -1,
+     #  content : trip_block.data('step6-1')
+     #},
+     {
+       sel : $('.step6').first(),
+       position : 's',
+       delay: -1,
+       content : trip_block.data('step6-1')
+     }
+  ], {
+      showNavigation: true,
+      #skipUndefinedTrip: true,
+      prevLabel: trip_block.data('prev'),
+      nextLabel: trip_block.data('next'),
+      finishLabel: trip_block.data('finish')
+    })
 	
 	$('.hover').hover(
     ->
@@ -179,7 +231,10 @@ $ ->
 	
 	$('.help').click(
 		->
-			trip.start()
+			if $(this).hasClass('plan')
+			 trip_plan.start()
+			else
+			  trip.start()
 	)
 	
 	# Ховер логаута

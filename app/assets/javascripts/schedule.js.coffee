@@ -64,3 +64,18 @@ $ ->
       $.arcticmodal('close')
       $('#form_'+id).trigger('submit')
   )
+  
+  $(window).scroll(
+    ->
+      $('.anchor').each(
+        ->
+          window_top = $(window).scrollTop()
+          a_top = $(this).offset().top
+          if window_top > a_top - 100
+            new_text = $(this).text()
+            $('.params .wrapper').text(new_text)
+          else
+            new_text = $(this).prev('.anchor').text()
+            $('.params .wrapper').text(new_text)
+      )
+  )
