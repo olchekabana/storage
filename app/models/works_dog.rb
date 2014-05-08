@@ -11,7 +11,8 @@ class WorksDog < ActiveRecord::Base
   #belongs_to :users, :foreign_key => "id_isp"
   
   # Защита от внезапного перименования полей бд
-  # default_scope where("id_isp = ?", session[:user_id])
+  default_scope where("id_isp = ?", "60")
+  #session[:user_id])
   scope :ord_stage_status, joins(:stages_dog).order("stages_dog.date_stop")
   scope :jgroup_works, group("works_dog.id_work")
   scope :jselect_works, select("works_dog.id_work")
@@ -27,7 +28,7 @@ class WorksDog < ActiveRecord::Base
   # Метод тут потому что прогресс выполнения высчитывается по заданиям
   # Выборка id работ в соответствии с фильтром
   # Необязательное значение по умолчанию, присвоение кукисов с типом сортировки в before_filter
-  def self.contracts(type=1)
+  def self.contracts_reserve(type=1)
     type = type.to_i
     # тип фильтрации
     # 1 - не завершенные
@@ -45,6 +46,13 @@ class WorksDog < ActiveRecord::Base
       works_completed.map!{|x| x.work_id} unless works_completed.nil?
       works = works_completed - (works_completed & works)
     end
+    return works || []
+  end
+  
+  def self.contracts(type=1)
+    list = self.stages(type)
+    stages = StagesDog.id_in_array(list).group_works
+    works = stages.map{|x| x.work_id} unless stages.nil?
     return works || []
   end
   
@@ -72,13 +80,14 @@ class WorksDog < ActiveRecord::Base
   def self.stageless_contracts(type=1)
     works = WorksDog.search_stageless(type)
     works.map!{|x| x.work_id} unless works.empty?
+    return works || []
   end
   
   # Массив заданий без этапа разбитых по work_id
   def self.stageless_list(type=1)
     works = self.search_stageless(type)
     tasks = works.group_by{|s| s.work_id} unless works.empty?
-    return tasks || []
+    return tasks || Hash.new
   end
   
   # Метод тут потому что прогресс выполнения высчитывается по заданиям
