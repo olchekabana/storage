@@ -34,7 +34,17 @@
 		<% if params[:stage_id] != "0" && !params[:stage_id].nil? %>
 			<h1><%= @stage.index %> - <%= @stage.name%></h1>
 		<% end %>
-		<div class="not-found">Ничего не найдено, измените параметры фильтрации задач</div>
+		<div class="not-found">Ничего не найдено, попробуйте изменить параметры фильтрации задач</div>
+	</div>
+<% elsif current_page?(:controller => "schedule", :action => "stages") %>
+	<div class="content lower">
+		<div class="not-found">
+			<% unless cookies[:sort_stages] == "3" %>
+				Ничего не найдено, попробуйте изменить параметры фильтрации этапов
+			<% else %>
+				Ничего не найдено
+			<% end %>
+		</div>
 	</div>
 <% else %>
 	<div class="content lower">

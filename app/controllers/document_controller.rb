@@ -1,6 +1,11 @@
 class DocumentController < ApplicationController
   respond_to :html, :js
   before_filter :check_auth
+  
+  def switch
+    
+  end
+  
   def filter
     @customers = Zakazchik.order("name_small").all
     @managers = Manager.order("fio").all

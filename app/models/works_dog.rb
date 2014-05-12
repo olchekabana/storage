@@ -11,7 +11,7 @@ class WorksDog < ActiveRecord::Base
   #belongs_to :users, :foreign_key => "id_isp"
   
   # Защита от внезапного перименования полей бд
-  default_scope where("id_isp = ?", "60")
+  default_scope where("id_isp = ?", "61")
   #session[:user_id])
   scope :ord_stage_status, joins(:stages_dog).order("stages_dog.date_stop")
   scope :jgroup_works, group("works_dog.id_work")
