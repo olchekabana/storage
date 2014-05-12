@@ -15,4 +15,14 @@ class ApplicationController < ActionController::Base
     cookies[:sort_stages] ||= 1
     cookies[:sort_tasks] ||= 1
   end
+  
+  def set_switch
+    session[:switch] ||= 'hide'
+  end
+  
+  def unuthed
+    unless session[:user_id]
+      redirect_to contracts_path
+    end
+  end
 end

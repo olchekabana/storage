@@ -25,10 +25,19 @@
 			<% end %>
 		</div>
 		<div class="info">
-			<div class="tree-content none"></div>
-			<div class="btn-wrap"><a href="/archives/archives_tree/<%= @contract.id.to_s %>" data-remote="true" >
-				<span class="btn archive-struct"><span class="icon-archive"></span><span class="text">Структура</span></span>
-			</a></div>
+			<% if session[:switch] == 'show' %>
+				<div class="tree-content">
+					<%= render partial: 'archives_tree', :locals => { :id => params[:id], :model => @model } %>
+				</div>
+				<div class="btn-wrap">
+					<span class='btn hide-tree'><span class='icon-archive'></span><span class='text' data-hide='Скрыть' data-show='Структура'>Скрыть</span></span>
+				</div>
+			<% else %>
+				<div class="tree-content none"></div>
+				<div class="btn-wrap"><a href="/archives/archives_tree/<%= @contract.id.to_s %>" data-remote="true" >
+					<span class="btn archive-struct"><span class="icon-archive"></span><span class="text">Структура</span></span>
+				</a></div>
+			<% end %>
 		</div>
 	</div>
 	

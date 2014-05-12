@@ -273,6 +273,9 @@ $ ->
 			$(this).toggleClass("hide-tree show-tree")
 			text_span = $(this).children(".text")
 			text_span.text(text_span.data('show'))
+			$.ajax({
+			  url: '/swith'
+			})
 	)
 	
 	$('.content-item').on('click', '.show-tree'
@@ -281,6 +284,9 @@ $ ->
 			$(this).toggleClass("show-tree hide-tree")
 			text_span = $(this).children(".text")
 			text_span.text(text_span.data('hide'))
+			$.ajax({
+        url: '/swith'
+      })
 	)
 	
 	$("#standards").hover(

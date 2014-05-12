@@ -40,7 +40,7 @@
 	<div class="content lower">
 		<div class="not-found">
 			<% unless cookies[:sort_stages] == "3" %>
-				Ничего не найдено, попробуйте изменить параметры фильтрации этапов
+				Ничего не найдено, попробуйте изменить параметры фильтрации этапов <%= session[:user_id] %> <%= cookies[:sort_stages] %> <%= @list %>
 			<% else %>
 				Ничего не найдено
 			<% end %>

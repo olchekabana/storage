@@ -1,9 +1,16 @@
 class DocumentController < ApplicationController
   respond_to :html, :js
-  before_filter :check_auth
+  before_filter :check_auth, :set_switch
   
   def switch
-    
+    if session[:switch] == 'show'
+      session[:switch] = 'hide'
+    else
+      session[:switch] = 'show'
+    end
+    respond_to do |format|
+      format.js
+    end
   end
   
   def filter
@@ -53,7 +60,12 @@ class DocumentController < ApplicationController
     end
     #@model = "archives"
     @c = Archiveskdpd.tree_hashes
-  #render "show_contract"
+    
+    if session[:switch] == 'show'
+      order = Archiveskdpd.tree(params[:id])
+      @tree = Archiveskdpd.order("field(id, #{order.join(',')})").where(:id => order)
+      @model = "archives"
+    end
   end
 
   def show_contract
@@ -66,6 +78,12 @@ class DocumentController < ApplicationController
     end
     @model = "contracts"
     @c = WorkSubWork.tree_hashes
+    
+    if session[:switch] == 'show'
+      order = WorkSubWork.tree(params[:id])
+      @tree = WorkSubWork.select("id_work, id_sub_work, name_small").order("field(id_work, #{order.join(',')})").where(:id_work => order)
+      @model = "contracts"
+    end
   end
 
   def archives
@@ -102,6 +120,11 @@ class DocumentController < ApplicationController
     order = Archiveskdpd.tree(params[:id])
     @tree = Archiveskdpd.order("field(id, #{order.join(',')})").where(:id => order)
     @model = "archives"
+    if session[:switch] == 'show'
+      session[:switch] = 'hide'
+    else
+      session[:switch] = 'show'
+    end
     respond_to do |format|
       format.js
     end
@@ -111,6 +134,11 @@ class DocumentController < ApplicationController
     order = WorkSubWork.tree(params[:id])
     @tree = WorkSubWork.select("id_work, id_sub_work, name_small").order("field(id_work, #{order.join(',')})").where(:id_work => order)
     @model = "contracts"
+    if session[:switch] == 'show'
+      session[:switch] = 'hide'
+    else
+      session[:switch] = 'show'
+    end
     respond_to do |format|
       format.js
     end
