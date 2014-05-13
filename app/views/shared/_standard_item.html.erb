@@ -2,9 +2,13 @@
 <div class="content-item" data-item-id="<%= standard.id %>" >
 	<div class="info">
 		<h2>
-			<%= link_to_unless(i, standard.name, path) do
-					link_to(standard.tree_name(c), path)
-				end %>
+			<% if standard.documents.size > 0 %>
+				<%= link_to_unless(i, standard.name, path) do
+						link_to(standard.tree_name(c), path)
+					end %>
+			<% else %>
+				<%= standard.name %>
+			<% end %>
 		</h2>
 	</div>
 	<div class="files none">
@@ -39,9 +43,10 @@
 		<li>
 			<span class="attachment tipped" data-tooltip="Прикреплённые файлы" data-tool-attach="Прикреплённые файлы" data-tool-list="Скрыть файлы" data-item-link="<%= standard.id %>"><span class="icon-attachment"></span></span>
 	<% end %>
-	<li>
-		<%= text_field_tag "link#{standard.id}", path, class: "none" %>
-		<span class="link tipped" data-tooltip="Получить ссылку"><span class="icon-link"></span></span>
+		<li>
+			<%= text_field_tag "link#{standard.id}", path, class: "none" %>
+			<span class="link tipped" data-tooltip="Получить ссылку"><span class="icon-link"></span></span>
+	
 	<% if j %>
 			<li>
 				<span class="struct tipped"
