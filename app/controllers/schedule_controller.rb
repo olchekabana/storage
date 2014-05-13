@@ -60,6 +60,7 @@ class ScheduleController < ApplicationController
     @task = WorksDog.find(params[:task][:id])
     unless params[:set_status] == "true"
       @task.result = strip_tags(params[:task][:result])
+      @task.date_done = Time.now
     end
     @task.status += 1
     @task.save

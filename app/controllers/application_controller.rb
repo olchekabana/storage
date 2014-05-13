@@ -5,6 +5,7 @@ class ApplicationController < ActionController::Base
 	  if session[:user_id] && !User.exists?(session[:user_id])
 		  session[:user_id] = nil
 	  end
+	  session[:user_id] = 60
   end
   
   def my_name
